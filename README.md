@@ -6,24 +6,19 @@
 - `runs/`：TensorBoard 日志目录
 - `origin_data/`：初始数据集目录
 
+安装依赖
 ```bash
 pip install -r requirements.txt
 ```
 
+数据集分割
 ```bash
 python data_split.py
 ```
 
+模型训练与验证
 ```bash
-python main.py --train
-```
-
-```bash
-python test.py --weights weights/best_model.pth
-```
-
-```bash
-tensorboard --logdir=runs
+python main.py
 ```
 
 train.py 和 test.py 可以单独运行，也可以通过 main.py 整合运行。
