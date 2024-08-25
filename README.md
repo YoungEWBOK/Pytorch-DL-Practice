@@ -4,6 +4,7 @@
 - `config.py`：配置文件，包含模型参数和训练设置
 - `weights/`：保存模型权重的文件夹
 - `runs/`：TensorBoard 日志目录
+- `origin_data/`：初始数据集目录
 
 ```bash
 pip install -r requirements.txt
