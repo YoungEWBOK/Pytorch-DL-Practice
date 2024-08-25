@@ -11,6 +11,10 @@ pip install -r requirements.txt
 ```
 
 ```bash
+python data_split.py
+```
+
+```bash
 python main.py --train
 ```
 
