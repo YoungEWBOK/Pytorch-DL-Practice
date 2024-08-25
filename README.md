@@ -1,3 +1,4 @@
+## 结构
 - `train.py`：用于训练模型
 - `test.py`：用于测试模型
 - `main.py`：整合训练和测试的执行
@@ -6,6 +7,7 @@
 - `runs/`：TensorBoard 日志目录
 - `origin_data/`：初始数据集目录
 
+## 步骤
 安装依赖
 ```bash
 pip install -r requirements.txt
