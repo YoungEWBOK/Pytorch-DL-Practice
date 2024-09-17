@@ -25,7 +25,11 @@ def main():
     plt.imshow(img)
     # [N, C, H, W]
     img = data_transform(img)
-    # 增加batch_size维度，第0维
+    # 增加batch_size维度，第0维，[3, 224, 224] → [1, 3, 224, 224]
+    '''
+    对于单张图像，我们通常会将它的形状调整为 [1, channels, height, width]，
+    以匹配模型的输入要求，其中 1 是 batch_size，表示只有一张图像。
+    '''
     img = torch.unsqueeze(img, dim=0)
 
     # 读入类别Json文件

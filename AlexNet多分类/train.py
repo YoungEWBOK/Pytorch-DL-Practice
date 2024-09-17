@@ -52,6 +52,12 @@ def main():
 
     # 保存类别索引
     flower_list = train_dataset.class_to_idx
+    # 反转字典键值对：将模型预测的类别标签（整数）转换回类别名称（字符串），以便于理解和展示结果。
+    '''
+    {'daisy': 0, 'dandelion': 1, 'roses': 2, 'sunflower': 3, 'tulips': 4}
+                                    ↓↓↓
+    {0: 'daisy', 1: 'dandelion', 2: 'roses', 3: 'sunflower', 4: 'tulips'}
+    '''
     cla_dict = {val: key for key, val in flower_list.items()}
     with open('class_indices.json', 'w') as json_file:
         json.dump(cla_dict, json_file, indent=4)
