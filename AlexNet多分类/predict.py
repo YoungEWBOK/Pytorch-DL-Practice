@@ -11,7 +11,8 @@ def main():
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
     data_transform = transforms.Compose([
-        transforms.Resize((224, 224)),
+        transforms.Resize((256, 256)),  # 保持比例
+        transforms.CenterCrop(224),     # 裁剪到 224x224
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
     ])
@@ -38,7 +39,7 @@ def main():
 
     weight_path = './AlexNet.pth'
     assert os.path.exists(weight_path), f"file: '{weight_path}' does not exist."
-    model.load_state_dict(torch.load(weight_path))
+    model.load_state_dict(torch.load(weight_path, map_location=device))
 
     model.eval()
     with torch.no_grad():
