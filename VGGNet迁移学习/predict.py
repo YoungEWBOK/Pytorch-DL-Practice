@@ -2,7 +2,7 @@ import torch
 from torchvision import transforms
 from PIL import Image
 import matplotlib.pyplot as plt
-from model import AlexNet
+from model import vgg
 
 import os
 import json
@@ -38,9 +38,9 @@ def main():
     with open(json_path, 'r') as f:
         class_indict = json.load(f)
 
-    model = AlexNet(num_classes=5).to(device)
+    model = vgg(model_name='vgg16', num_classes=5).to(device)
 
-    weight_path = './AlexNet.pth'
+    weight_path = './vgg16Net.pth'
     assert os.path.exists(weight_path), f"file: '{weight_path}' does not exist."
     model.load_state_dict(torch.load(weight_path, map_location=device))
 

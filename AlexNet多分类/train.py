@@ -26,7 +26,6 @@ def main():
                 transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
             ]),
         "val": transforms.Compose([
-            transforms.Resize((256, 256)),   # 保持比例，再裁剪
             transforms.CenterCrop(224),
             transforms.ToTensor(),
             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
@@ -62,7 +61,7 @@ def main():
     with open('class_indices.json', 'w') as json_file:
         json.dump(cla_dict, json_file, indent=4)
 
-    print(f"Using {train_num} images for training, {val_num} images for validating.")
+    print(f"Using {train_num} images for training, {val_num} images for validation.")
 
     # 数据可视化
     test_data_iter = iter(val_loader)
