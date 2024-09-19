@@ -2,7 +2,7 @@ import torch
 from torchvision import transforms
 from PIL import Image
 import matplotlib.pyplot as plt
-from model import vgg
+from model import GoogLeNet
 
 import os
 import json
@@ -38,11 +38,11 @@ def main():
     with open(json_path, 'r') as f:
         class_indict = json.load(f)
 
-    model = vgg(model_name='vgg16', num_classes=5).to(device)
+    model = GoogLeNet(num_classes=5, aux_logits=False).to(device)
 
-    weight_path = './vgg16Net.pth'
+    weight_path = './googleNet.pth'
     assert os.path.exists(weight_path), f"file: '{weight_path}' does not exist."
-    model.load_state_dict(torch.load(weight_path, map_location=device))
+    model.load_state_dict(torch.load(weight_path, map_location=device), strict=False)
 
     model.eval()
     with torch.no_grad():
