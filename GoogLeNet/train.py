@@ -57,7 +57,7 @@ def main():
     
     print(f"Using {train_num} images for training, {val_num} images for validation.")
 
-    # 使用预训练的GoogLeNet
+    # 未使用预训练的GoogLeNet，从头开始训练
     model = GoogLeNet(num_classes=5, aux_logits=True, init_weights=True)
 
     model.to(device)

@@ -1,9 +1,10 @@
 '''
-使用官方的预训练权重进行迁移学习，但是val_acc始终维持在0.245，未找到解决原因
+使用官方的预训练权重进行迁移学习
+会过滤[aux1.fc2.weight, aux1.fc2.bias, aux2.fc2.weight, aux2.fc2.bias, fc.weight, fc.bias]这6个键
 '''
 import torch
 import torch.nn as nn
-from torchvision import transforms, datasets
+from torchvision import transforms, datasets, models
 from torch.utils.data import DataLoader
 import torch.optim as optim
 from model import GoogLeNet
@@ -58,25 +59,25 @@ def main():
     print(f"Using {train_num} images for training, {val_num} images for validation.")
 
     # 使用预训练的GoogLeNet
-    model = GoogLeNet(num_classes=5, aux_logits=True, init_weights=False)
+    model = models.googlenet(num_classes=5, init_weights=True)
+    model_dict = model.state_dict()
 
     # 加载预训练权重
     pretrain_model_path = 'googlenet_pretrained.pth'
     pretrained_dict = torch.load(pretrain_model_path)
-    model_dict = model.state_dict()
 
     # 只加载匹配的参数
     pretrained_dict = {k: v for k, v in pretrained_dict.items() if k in model_dict and v.size() == model_dict[k].size()}
     model_dict.update(pretrained_dict)
     model.load_state_dict(model_dict)
 
-    # 冻结所有层，只训练最后一层
-    for param in model.parameters():
-        param.requires_grad = False
-    model.fc.requires_grad = True   # 只训练最后的全连接层
+    # # 冻结所有层，只训练最后一层
+    # for param in model.parameters():
+    #     param.requires_grad = False
+    # model.fc.requires_grad = True   # 只训练最后的全连接层
 
-    # 修改最后一层，以适应自定义的数据集
-    model.fc = nn.Linear(model.fc.in_features, 5)   # 5代表对应的分类数
+    # # 修改最后一层，以适应自定义的数据集
+    # model.fc = nn.Linear(model.fc.in_features, 5)   # 5代表对应的分类数
     model.to(device)
 
     criterion = nn.CrossEntropyLoss()

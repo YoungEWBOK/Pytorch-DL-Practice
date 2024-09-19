@@ -1,5 +1,11 @@
+'''
+如果最优权重是由预训练权重迁移学习训练出来的
+则注意创建模型时需要注释原代码，使用另一条代码
+fc.weight 和 fc.bias 是关键的权重参数，对模型的最终输出有重要影响
+(其他4个辅助分类器参数在预测阶段不会被用到)
+'''
 import torch
-from torchvision import transforms
+from torchvision import transforms, models
 from PIL import Image
 import matplotlib.pyplot as plt
 from model import GoogLeNet
@@ -38,7 +44,9 @@ def main():
     with open(json_path, 'r') as f:
         class_indict = json.load(f)
 
-    model = GoogLeNet(num_classes=5, aux_logits=False).to(device)
+    # 此处需要进行model的选择
+    # model = GoogLeNet(num_classes=5, aux_logits=False).to(device)
+    model = models.googlenet(num_classes=5).to(device)
 
     weight_path = './googleNet.pth'
     assert os.path.exists(weight_path), f"file: '{weight_path}' does not exist."
